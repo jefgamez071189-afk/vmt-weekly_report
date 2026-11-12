@@ -1,0 +1,388 @@
+
+:root {
+  color-scheme: light;
+  --bg: #f5f6f5;
+  --surface: #ffffff;
+  --surface-2: #f0f2f0;
+  --text: #202522;
+  --muted: #7a827c;
+  --border: #e6e9e6;
+  --accent: #009a74;
+  --accent-hover: #008060;
+  --accent-soft: #e6f5f1;
+  --shadow: 0 8px 35px rgba(20, 35, 24, .045);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 40px 20px;
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ANIMACIONES DE ENTRADA */
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(.97);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes iconoPop {
+  0% {
+    opacity: 0;
+    transform: scale(.6) translateY(20px);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.06) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes flotar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ENTRADA GENERAL: EXCLUIMOS H1 */
+
+.topbar, .app-icon, .subtitle, .access-card, footer {
+  opacity: 0;
+  animation: entrada 1.2s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.topbar {
+  animation-delay: .2s;
+}
+
+.app-icon {
+  animation: iconoPop 1.3s cubic-bezier(.16, 1, .3, 1) .5s both,
+             flotar 5s ease-in-out 2.2s infinite;
+}
+
+.subtitle {
+  animation-delay: 1.05s;
+}
+
+.access-card {
+  animation-delay: 1.3s;
+}
+
+footer {
+  animation-delay: 1.7s;
+}
+
+/* ANIMACIÓN PROPIA DEL TÍTULO MATRIX: SIN DIFUMINADO */
+
+@keyframes tituloEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CABECERA */
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 530px;
+  margin: 0 auto 52px;
+  transition: opacity .38s ease, transform .38s ease;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-vmt {
+  margin-bottom: 4px;
+  color: var(--accent);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.brand-company {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.internal-label {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+main {
+  width: 100%;
+  max-width: 390px;
+  margin: auto;
+  padding: 30px 0;
+  text-align: center;
+  transition: opacity .38s ease, transform .38s ease;
+}
+
+.app-icon {
+  display: block;
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+  border-radius: 22px;
+  margin: 0 auto 24px;
+  box-shadow: 0 5px 18px rgba(20, 35, 24, .10);
+  transition: transform .38s ease, box-shadow .38s ease;
+}
+
+/* TÍTULO: INDEPENDIENTE DEL BLUR GENERAL */
+
+h1 {
+  margin: 0 0 9px;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -.9px;
+  opacity: 0;
+  filter: none !important;
+  animation: tituloEntrada .8s ease .85s forwards;
+}
+
+.subtitle {
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* TARJETA DE ACCESO */
+
+.access-card {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.access-card p {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.open-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 54px;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 5px 13px rgba(0, 154, 116, .18);
+  transition:
+    background .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease,
+    opacity .25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.open-button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 154, 116, .23);
+}
+
+.open-button:active {
+  transform: translateY(0);
+}
+
+.arrow {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.access-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 19px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.access-note svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--muted);
+  flex-shrink: 0;
+}
+
+/* PIE DE PÁGINA */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 530px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  transition: opacity .38s ease, transform .38s ease;
+}
+
+.footer-company {
+  font-weight: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+.footer-tagline {
+  text-align: right;
+}
+
+/* ANIMACIÓN DE SALIDA */
+
+body.is-opening .topbar,
+body.is-opening main,
+body.is-opening footer {
+  animation: none;
+  opacity: 0;
+  transform: translateY(-14px);
+}
+
+body.is-opening .app-icon {
+  animation: none;
+  opacity: 1;
+  filter: none;
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 12px rgba(0, 154, 116, .10),
+    0 0 35px rgba(0, 154, 116, .25);
+}
+
+.open-button.is-loading {
+  opacity: .9;
+  pointer-events: none;
+}
+
+.open-button.is-loading .arrow {
+  display: none;
+}
+
+.open-button.is-loading::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ADAPTACIÓN A MÓVILES */
+
+@media (max-width: 480px) {
+  body {
+    padding: 28px 18px;
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .topbar {
+    margin-bottom: 42px;
+  }
+
+  .brand-vmt {
+    font-size: 34px;
+  }
+
+  main {
+    padding: 25px 0;
+  }
+
+  .access-card {
+    padding: 23px;
+  }
+
+  footer {
+    font-size: 9px;
+  }
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar, main, footer, .app-icon, h1, .subtitle,
+  .access-card, .open-button {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
