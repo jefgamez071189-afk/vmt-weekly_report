@@ -1,85 +1,75 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  // 1. TÍTULO QUE SE DESCIFRA DE IZQUIERDA A DERECHA (MATRIX)
+  // =========================================================================
+  // 1. ANIMACIÓN DE REVELADO DE IZQUIERDA A DERECHA (MATRIX)
+  // =========================================================================
 
   const titulo = document.getElementById("matrix-title");
 
   if (titulo) {
-    const textoOriginal = "VMT Weekly Report";
-    const glifos = "!<>-_/[]{}=+*^?#01";
-    const sinAnimacion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const textoOriginal = "VMT On Time";
+    const glifos = "ABCDEFGHJKLMNOPQRSTUVWXYZ0123456789#$&%@+?*";
 
-    if (!sinAnimacion) {
-      titulo.setAttribute("aria-label", textoOriginal);
-      titulo.textContent = "";
+    let posicionActual = 0;
 
-      const cajas = textoOriginal.split("").map((letra) => {
-        const caja = document.createElement("span");
-        caja.setAttribute("aria-hidden", "true");
-        caja.style.display = "inline-block";
-        caja.style.whiteSpace = "pre";
-        caja.style.textAlign = "center";
-        caja.textContent = letra;
-        titulo.appendChild(caja);
-        return caja;
-      });
+    const intervalo = setInterval(() => {
 
-      cajas.forEach((caja) => {
-        caja.style.width = caja.getBoundingClientRect().width + "px";
-        caja.textContent = "";
-      });
+      titulo.innerText = textoOriginal
+        .split("")
+        .map((letra, indice) => {
 
-      const retraso = 850;
-      const duracion = 1500;
-      const inicio = performance.now() + retraso;
-      const n = textoOriginal.length;
-
-      const paso = (ahora) => {
-        const k = Math.max(0, (ahora - inicio) / duracion);
-
-        cajas.forEach((caja, i) => {
-          const letra = textoOriginal[i];
-          const hecho = k * (n + 4) - i;
-
-          if (letra === " ") {
-            caja.textContent = " ";
-          } else if (hecho > 3) {
-            caja.textContent = letra;
-          } else if (hecho > 0) {
-            caja.textContent = glifos[Math.floor(Math.random() * glifos.length)];
-          } else {
-            caja.textContent = "";
+          // Letras ya descifradas definitivamente
+          if (indice < Math.floor(posicionActual)) {
+            return textoOriginal[indice];
           }
-        });
 
-        if (k < 1) {
-          requestAnimationFrame(paso);
-        } else {
-          cajas.forEach((caja, i) => { caja.textContent = textoOriginal[i]; });
-        }
-      };
+          // Mantener espacios en blanco
+          if (textoOriginal[indice] === " ") {
+            return " ";
+          }
 
-      requestAnimationFrame(paso);
-    }
+          // Letra actual con caracteres aleatorios
+          if (indice === Math.floor(posicionActual)) {
+            return glifos[Math.floor(Math.random() * glifos.length)];
+          }
+
+          // Letras todavía ocultas
+          return " ";
+
+        })
+        .join("");
+
+      // VELOCIDAD ORIGINAL
+      posicionActual += 0.25;
+
+      // Finalizar cuando se haya revelado todo el texto
+      if (posicionActual >= textoOriginal.length) {
+        titulo.innerText = textoOriginal;
+        clearInterval(intervalo);
+      }
+
+    }, 40);
+
   }
 
+  // =========================================================================
   // 2. CONTROL DEL BOTÓN DE ACCESO
+  // =========================================================================
 
   const openLink = document.getElementById("openLink");
   const openButtonText = document.getElementById("openButtonText");
 
   if (openLink && openButtonText) {
 
-    openLink.addEventListener("click", function (e) {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-
+    openLink.addEventListener("click", function () {
       openLink.classList.add("is-loading");
       openButtonText.textContent = "Cargando...";
     });
 
     window.addEventListener("pageshow", function () {
       openLink.classList.remove("is-loading");
-      openButtonText.textContent = "Abrir VMT Weekly Report";
+      openButtonText.textContent = "Abrir VMT On Time";
     });
 
   }
