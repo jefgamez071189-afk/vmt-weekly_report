@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const titulo = document.getElementById("matrix-title");
 
   if (titulo) {
-    const textoOriginal = "VMT On Time";
+    const textoOriginal = "VMT Hours";
     const glifos = "ABCDEFGHJKLMNOPQRSTUVWXYZ0123456789#$&%@+?*";
 
     let posicionActual = 0;
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("pageshow", function () {
       openLink.classList.remove("is-loading");
-      openButtonText.textContent = "Abrir VMT On Time";
+      openButtonText.textContent = "Abrir VMT Hours";
     });
 
   }
